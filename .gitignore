@@ -1,0 +1,74 @@
+# =========================
+# Node.js
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+.pnpm-debug.log
+
+# =========================
+# TypeScript
+# =========================
+dist/
+build/
+tsconfig.tsbuildinfo
+
+# =========================
+# Logs
+# =========================
+*.log
+logs
+*.pid
+*.seed
+*.pid.lock
+
+# =========================
+# Environment
+# =========================
+.env
+.env.test
+.env.development
+.env.production
+.env.local
+
+# =========================
+# VSCode
+# =========================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# =========================
+# Docker
+# =========================
+.docker/
+docker-compose.override.yml
+
+# =========================
+# OS-specific
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Testing / Coverage
+# =========================
+coverage/
+.nyc_output/
+cypress/
+
+# =========================
+# Other cache
+# =========================
+.cache/
+.parcel-cache/
+.next/
+out/
+.tmp/
+temp/
+.biome/
