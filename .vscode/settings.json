@@ -8,4 +8,7 @@
     },
     "workbench.iconTheme": "material-icon-theme",
     "material-icon-theme.activeIconPack": "react",
+    "[sql]": {
+        "editor.defaultFormatter": "ms-ossdata.vscode-pgsql"
+    }
 }
