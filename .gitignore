@@ -29,10 +29,6 @@ logs
 # Environment
 # =========================
 .env
-.env.test
-.env.development
-.env.production
-.env.local
 
 # =========================
 # VSCode

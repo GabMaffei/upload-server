@@ -1,5 +1,10 @@
 import { Readable } from 'node:stream'
 import { z } from 'zod'
+import { db } from '@/infra/db'
+import { schema } from '@/infra/db/schemas'
+import { uploadFileToStorage } from '@/infra/storage/upload-file-to-storage'
+import { Either, makeLeft, makeRight } from '@/shared/either'
+import { InvalidFileFormat } from '../errors/invalid-file'
 
 const uploadImageInput = z.object({
   fileName: z.string(),
@@ -7,8 +12,31 @@ const uploadImageInput = z.object({
   contentStream: z.instanceof(Readable),
 })
 
-type uploadImageInput = z.input<typeof uploadImageInput>
+type UploadImageInput = z.input<typeof uploadImageInput>
 
-export async function uploadImage(input: uploadImageInput) {
+const allowedFileTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp']
+
+export async function uploadImage(
+  input: UploadImageInput
+): Promise<Either<InvalidFileFormat, { url: string }>> {
   const { fileName, contentType, contentStream } = uploadImageInput.parse(input)
+
+  if (!allowedFileTypes.includes(contentType)) {
+    return makeLeft(new InvalidFileFormat())
+  }
+
+  const { key, url } = await uploadFileToStorage({
+    folder: 'images',
+    fileName,
+    contentType,
+    contentStream,
+  })
+
+  await db.insert(schema.uploads).values({
+    name: fileName,
+    remoteKey: key,
+    remoteUrl: url,
+  })
+
+  return makeRight({ url })
 }
