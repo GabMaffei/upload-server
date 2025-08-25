@@ -3,7 +3,8 @@ import { z } from 'zod'
 import { db } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
 import { uploadFileToStorage } from '@/infra/storage/upload-file-to-storage'
-import { Either, makeLeft, makeRight } from '@/shared/either'
+import type { Either } from '@/shared/either'
+import { makeLeft, makeRight } from '@/shared/either'
 import { InvalidFileFormat } from '../errors/invalid-file'
 
 const uploadImageInput = z.object({
