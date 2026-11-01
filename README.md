@@ -50,3 +50,28 @@ The repository does not include a `.env.example`. Supply your own values and kee
 ## Project status
 
 This repository is a guided learning project, not a deployed service. It includes upload, listing, and CSV export code, but the upload route's response differs from what the frontend expects. Automated tests require the configured test database and storage environment.
+
+## Source guide
+
+| Source | What to inspect |
+| --- | --- |
+| [Server setup](src/infra/http/server.ts) | Route registration, error handling, and OpenAPI UI. |
+| [Upload route](src/infra/http/routes/upload-image.ts) | Multipart input validation and the current response. |
+| [Listing route](src/infra/http/routes/get-uploads.ts) | Search, sorting, and pagination parameters. |
+| [CSV export route](src/infra/http/routes/export-uploads.ts) | Filtered export request and reportUrl response. |
+
+## API request examples
+
+After configuring the local database and your R2 bucket, the listing route accepts explicit search and pagination parameters:
+
+```bash
+curl 'http://localhost:3333/uploads?searchQuery=example&sortBy=createdAt&sortDirection=desc&page=1&pageSize=20'
+```
+
+To request a filtered CSV export:
+
+```bash
+curl 'http://localhost:3333/uploads/exports?searchQuery=example'
+```
+
+The export response contains `reportUrl`, not the image-upload `url` expected by the companion frontend. These examples document request contracts; they are not recorded test results.
